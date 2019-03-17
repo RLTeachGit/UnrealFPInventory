@@ -161,7 +161,7 @@ void AUnrealFPInventoryCharacter::OnFire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
-	Ammo--;
+	Ammo--; //Decrement Ammo count
 }
 
 
@@ -219,3 +219,28 @@ bool AUnrealFPInventoryCharacter::OnPickup_Implementation(APickupActor* tPickup)
 	UE_LOG(LogTemp, Log, TEXT("All %d attach points used"), tLocations.Num());
 	return	false;
 }
+
+
+int AUnrealFPInventoryCharacter::ItemCount()
+{
+	int		tCount = 0;
+	for (int tI=0;tI <Pickups.Num();tI++)
+	{
+		if (IsValid(Pickups[tI])) tCount++;
+	}
+	return	tCount;
+}
+
+int AUnrealFPInventoryCharacter::UpdateAmmo(int Delta)
+{
+	Ammo += Delta;
+	if (Ammo < 0) Ammo = 0; //Dont Allow Ammo to be less than 0
+	return Ammo;
+}
+
+int AUnrealFPInventoryCharacter::AmmoGetter()
+{
+	return Ammo;
+}
+
+

@@ -70,10 +70,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	class UAnimMontage* FireAnimation;
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	int	Ammo;
-
 protected:
 	
 	/** Fires a projectile. */
@@ -115,12 +111,23 @@ public:
 public:
 
 	UPROPERTY()
-	TArray<TSoftObjectPtr<class APickupActor>> Pickups; //Array of items picked up
+	TArray<APickupActor*> Pickups; //Array of items picked up
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool OnPickup(APickupActor* Pickup); //Can override this in BP
 	bool OnPickup_Implementation(APickupActor* Pickup); //C++ Parent
 
+	UFUNCTION(BlueprintCallable,BlueprintPure)
+	int ItemCount();
+
+	UFUNCTION(BlueprintCallable)
+	int UpdateAmmo(int Delta);
+
+	UFUNCTION(BlueprintGetter)
+	int AmmoGetter();
+
+	UPROPERTY(BlueprintGetter = AmmoGetter, Category = Gameplay)
+	int	Ammo;
 
 };
 

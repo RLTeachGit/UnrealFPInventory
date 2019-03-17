@@ -9,5 +9,6 @@ public class UnrealFPInventory : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
-	}
+        PrivateDependencyModuleNames.AddRange(new string[] { "UMG", "Slate", "SlateCore" }); //Needed for C++ Widget code 
+    }
 }

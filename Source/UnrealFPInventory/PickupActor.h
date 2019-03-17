@@ -12,7 +12,7 @@ UCLASS()
 class UNREALFPINVENTORY_API APickupActor : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:	
 	// Sets default values for this actor's properties
 	APickupActor();
@@ -36,21 +36,33 @@ public: //Set up up default components
 	UPROPERTY(EditAnywhere, Category = Mesh)
 	class USceneComponent* OnPlayerDepiction;
 
-	UPROPERTY(EditAnywhere, Category = Mesh)
-	float	BobSpeed;	//How fast Pickup Bobs up and down
-
-	UPROPERTY(EditAnywhere, Category = Mesh)
-	float	BobHeight;	//How high Pickup Bobs up and down
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Gameplay)
 	void OnPickedup(AUnrealFPInventoryCharacter* OwningActor); //Send who picked us up, implemented in BP
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = Gameplay)
+	void OnPickupTick(float DeltaTime, float TimeAlive); //DeltaTime and Time Alive so far
+
+
+	//Getters for variables
+	UFUNCTION(BlueprintGetter)	//Function header
+	float	TimeAliveGetter(); //Get Time Alive
+
+	UPROPERTY(BlueprintGetter = TimeAliveGetter, Category = Pickup) //Link to Getter
+	float	TimeAlive; //Keep total time since start
+
+	UFUNCTION(BlueprintGetter)
+	bool	IsPickedUpGetter(); //Get Pickupflag
+
+	UPROPERTY(BlueprintGetter = IsPickedUpGetter, Category = Pickup) //Link to Getter
+	bool	IsPickedUp; //Flag to show if we are picked up
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FString GetDescription(); //Can override this in BP
+	FString GetDescription_Implementation(); //C++ Parent
 
 private:
 
 	UFUNCTION()	//As we are dynamically adding this we need it to be a UFUNCTION()
 	void OnOverlap(AActor * MyActor, AActor * OtherActor);
 
-	float	CurrentBobTime;
-
-	bool	isPickedUp; //Flag to show if we are picked up
 };
