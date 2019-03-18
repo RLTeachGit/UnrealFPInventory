@@ -73,10 +73,9 @@ void APickupActor::OnOverlap(AActor * MyActor, AActor * OtherActor)
 			IsPickedUp = tInventoryActor->OnPickup(this); //Ask Character to pickup, they can refuse by returning false
 			if (IsPickedUp)
 			{
-
+				tMyPickup->SetActorEnableCollision(false); //Stop actor colliding from now on, or own bullets will bounce back
 				WorldDepiction->SetHiddenInGame(true, true);
 				OnPlayerDepiction->SetHiddenInGame(false, true);
-
 				OnPlayerDepiction->ResetRelativeTransform();
 			}
 		}
