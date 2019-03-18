@@ -126,6 +126,9 @@ public:
 	UFUNCTION(BlueprintGetter)
 	int AmmoGetter();
 
+	UFUNCTION(BlueprintCallable)
+	void ShowGun(bool Show);
+
 	UPROPERTY(BlueprintGetter = AmmoGetter, Category = Gameplay)
 	int	Ammo;
 

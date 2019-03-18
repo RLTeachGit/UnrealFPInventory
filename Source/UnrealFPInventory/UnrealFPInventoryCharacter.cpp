@@ -75,7 +75,11 @@ void AUnrealFPInventoryCharacter::BeginPlay()
 	//Attach gun mesh component to Skeleton, doing it here because the skeleton is not yet created in the constructor
 	FP_Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 
-	Mesh1P->SetHiddenInGame(false, true); //Unhide Gun
+	Mesh1P->SetHiddenInGame(false, true); //Unhide Player
+
+	ShowGun(false);
+
+
 }
 
 void AUnrealFPInventoryCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason) //Tidy up after play by removing dynamically added Abilities
@@ -115,8 +119,11 @@ void AUnrealFPInventoryCharacter::SetupPlayerInputComponent(class UInputComponen
 }
 
 
+
 void AUnrealFPInventoryCharacter::OnFire()
 {
+	if (!FP_Gun->IsVisible()) return;
+
 	if (Ammo <= 0) //If we are on Empty play click
 	{
 		if (ClickSound != NULL)
@@ -241,6 +248,11 @@ int AUnrealFPInventoryCharacter::UpdateAmmo(int Delta)
 int AUnrealFPInventoryCharacter::AmmoGetter()
 {
 	return Ammo;
+}
+
+void AUnrealFPInventoryCharacter::ShowGun(bool Show)
+{
+	FP_Gun->SetHiddenInGame(!Show, true);
 }
 
 
