@@ -36,8 +36,6 @@ APickupActor::APickupActor()
 	IsPickedUp = false;
 }
 
-
-
 // Called when the game starts or when spawned
 void APickupActor::BeginPlay()
 {
